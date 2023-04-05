@@ -34,6 +34,7 @@ namespace BookBlox.Controllers
             {
                 _db.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
 
@@ -69,6 +70,7 @@ namespace BookBlox.Controllers
                 {
                     _db.Update(obj);
                     _db.SaveChanges();
+                    TempData["success"] = "Category updated successfully!";
                     return RedirectToAction("Index");
                 }
             }
@@ -107,6 +109,7 @@ namespace BookBlox.Controllers
             {
                 _db.Remove(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category deleted successfully!";
             }
             catch(Exception err)
             {
