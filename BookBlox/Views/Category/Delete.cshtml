@@ -3,6 +3,8 @@
     ViewData["Title"] = "Delete";
 }
 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 <form method="post">
     <input asp-for="Id" hidden />
     <div class="border p-3 mt-4">
@@ -20,7 +22,7 @@
             <input asp-for="DisplayOrder" class="form-control" disabled/>
             <span asp-validation-for="DisplayOrder" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-danger" style="width: 150px">Delete</button>
+        <button type="submit" class="btn btn-danger" style="width: 150px" id="delete-btn">Delete</button>
         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
@@ -29,4 +31,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 }
