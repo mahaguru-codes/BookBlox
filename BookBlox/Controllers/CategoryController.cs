@@ -30,8 +30,89 @@ namespace BookBlox.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
         {
-            _db.Add(obj);
-            _db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _db.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+        }
+
+        // GET
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = _db.Categories.FirstOrDefault(c => c.Id == id);
+
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category obj)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _db.Update(obj);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch(Exception err)
+            {
+
+            }
+
+            return View(obj);
+        }
+
+        // GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = _db.Categories.FirstOrDefault(c => c.Id == id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Category obj)
+        {
+            try
+            {
+                _db.Remove(obj);
+                _db.SaveChanges();
+            }
+            catch(Exception err)
+            {
+
+            }
+
             return RedirectToAction("Index");
         }
     }
