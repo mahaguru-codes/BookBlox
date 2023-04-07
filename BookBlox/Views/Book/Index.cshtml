@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Book>
+
+<partial name="_Notification" />
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6 text-primary">
+            <h2>Add New Book</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Book" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"> </i>
+                Add New Book
+                </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <h3 class="text-secondary">We don't have any books!</h3>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Add Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
+                <tr>
+                    <td>@obj.Name</td>
+                    <td>@obj.Price</td>
+                    <td>@Convert.ToDateTime(obj.AddDate).ToString("dd MMM yyyy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>

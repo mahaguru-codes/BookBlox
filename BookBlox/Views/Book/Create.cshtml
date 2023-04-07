@@ -1,4 +1,5 @@
-﻿@model Category
+﻿@model Book
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -7,7 +8,7 @@
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Create Category</h2>
+            <h2 class="text-primary">Create Book</h2>
             <hr />
         </div>
         <div class="mb-3">
@@ -16,12 +17,17 @@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>        
         <div class="mb-3">
-            <label asp-for="DisplayOrder"></label>
-            <input asp-for="DisplayOrder" class="form-control" />
-            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AddDate"></label>
+            <input type="datetime-local" asp-for="AddDate" class="form-control" />
+            <span asp-validation-for="AddDate" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 150px">Create</button>
-        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
 

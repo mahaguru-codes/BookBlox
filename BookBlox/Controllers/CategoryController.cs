@@ -1,6 +1,7 @@
 ﻿using BookBlox.Data;
 using BookBlox.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookBlox.Controllers
 {
@@ -15,7 +16,7 @@ namespace BookBlox.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Category> categories = _db.Categories;
+            IEnumerable<Category> categories = from s in _db.Categories orderby s.Name select s;
             return View(categories);
         }
 
@@ -32,13 +33,29 @@ namespace BookBlox.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Category created successfully!";
-                return RedirectToAction("Index");
+                if (!CheckExisting(obj).Result)
+                {
+                    _db.Add(obj);
+                    _db.SaveChanges();
+                    TempData["success"] = "Category created successfully!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Category", "This value is already exists in database!");
+                    TempData["error"] = "Category already exists!";
+                }
+
             }
 
             return View(obj);
+        }
+
+        private async Task<bool> CheckExisting(Category obj)
+        {
+            bool valueExists = await _db.Categories.AnyAsync(m => m.Name == obj.Name);
+
+            return valueExists;
         }
 
         // GET
@@ -111,7 +128,7 @@ namespace BookBlox.Controllers
                 _db.SaveChanges();
                 TempData["success"] = "Category deleted successfully!";
             }
-            catch(Exception err)
+            catch (Exception err)
             {
 
             }

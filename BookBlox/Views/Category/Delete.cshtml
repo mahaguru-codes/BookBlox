@@ -22,7 +22,8 @@
             <input asp-for="DisplayOrder" class="form-control" disabled/>
             <span asp-validation-for="DisplayOrder" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-danger" style="width: 150px" id="delete-btn">Delete</button>
+        <a href="@Url.Action("Delete", new { id = Model.Id })" onclick="return confirmDelete()">Delete</a
+        @*<button type="submit" class="btn btn-danger" style="width: 150px" id="delete-btn" onclick="return confirmDelete()">Delete</button>*@
         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
@@ -33,4 +34,29 @@
     }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+    function confirmDelete() {
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-right",
+            "progressBar": true,
+            "preventDuplicates": true
+        };
+        
+        toastr.warning("Are you sure you want to delete this record?",
+            "",
+            {
+                "timeOut": "0",
+                "extendedTimeOut": "0",
+                "closeButton": true,
+                "positionClass": "toast-top-right",
+                "onclick": function () {
+                    $(location).attr('href', '@Url.Action("Delete", new { id = Model.Id })');
+                }
+            }
+        );
+        return false;
+    }
+</script>
+
 }
